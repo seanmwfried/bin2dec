@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bin2Dec</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+    body {
+      background-color: #222;
+      color: #eee;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    main {
+      max-width: 600px;
+      margin: auto;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 0;
+    }
+
+    p {
+      margin-top: 0;
+    }
+
+    .inputs-container {
+      display: flex;
+      gap: 20px;
+      justify-content: space-around;
+      flex-direction: column;
+    }
+
+    .input {
+      display: flex;
+      flex-direction: column;
+    }
+
+    input {
+      border-radius: 5px;
+      padding: 5px;
+      background-color: #bbb;
+      text-align: right;
+    }
+
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Bin2Dec</h1>
+    <p>Enter the values into the field below, and the value will automatically update</p>
+    <div class="inputs-container">
+      <div class="input binary-input-container">
+        <label for="binary">Binary</label>
+        <input type="text" name="binary" id="binary" value=0>
+      </div>
+      <div class="input decimal-input-container">
+        <label for="decimal">Decimal</label>
+        <input type="text" name="decimal" id="decimal" value=0>
+      </div>
+    </div>
+  </main>
+  <script>
+    const binaryInputElement  = document.getElementById('binary');
+    const decimalInputElement = document.getElementById('decimal');
+
+    binaryInputElement.addEventListener('input', function(){
+      //Return if no input
+      if(binaryInputElement.value == ''){
+        decimalInputElement.value = '';
+        return
+      }
+
+      //Sanitize
+      binaryInputElement.value = binaryInputElement.value.replace(/[^0-1]/g, '');
+
+      //Convert
+      decimalInputElement.value = parseInt(binaryInputElement.value, 2);
+    });
+    
+    decimalInputElement.addEventListener('input', function(){
+      //Return if no input
+      if(decimalInputElement.value == ''){
+        binaryInputElement.value = '';
+        return
+      }
+
+      //Sanitize
+      decimalInputElement.value = decimalInputElement.value.replace(/[^0-9]/g, '');
+
+      //Convert
+      binaryInputElement.value = Number(decimalInputElement.value).toString(2);
+    })
+  </script>
+</body>
+</html>
